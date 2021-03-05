@@ -40,7 +40,7 @@ mqtt:
   broker: 'mqtt.thingspeak.com'
   port: '1883'
   client_id: 'esp3217856842'# use a unique id
-#  username: 'user465798' \\ necessary for subscribing but not publishing, can be random but unique string
+#  username: 'user465798' \\ necessary for subscribing but not publishing, can be a random but unique string
 #  password: '<<secret>>' \\ necessary for subscribing but not publishing, your thingspeak MQTT API Key
   discovery: 'false'
   topic_prefix: 'channels'
@@ -57,7 +57,7 @@ sensor:
     echo_pin: GPIO17
     name: "Ultrasonic Sensor"
     id: ultrasonic_sensor
-    state_topic: channels/1314715/publish/fields/field2/7YTE94NJU5ZZKJQR
+    state_topic: channels/<<channelid>>/publish/fields/<<fieldnumber>>/<<writeAPIkey>> #replace with your thingspeak input
     discovery: False
     retain: false # must be false for thingspeak for each topic
     pulse_time: 25us
@@ -74,7 +74,7 @@ sensor:
     pin: GPIO33 #GPIO 32-39
     name: "Accu voltage"
     id: voltage_meter
-    state_topic: channels/1314715/publish/fields/field1/7YTE94NJU5ZZKJQR
+    state_topic: channels/<<channelid>>/publish/fields/<<fieldnumber>>/<<writeAPIkey>> #replace with your thingspeak input
     unit_of_measurement: "Volt"
     discovery: False
     retain: false # must be false for thingspeak for each topic
