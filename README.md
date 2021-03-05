@@ -1,5 +1,5 @@
-# Esphome-boat-battery-and-waterlevel-monitor
-A boat/car battery monitor for battery voltage and water level.
+# Esphome boat/car battery and waterlevel-monitor
+A boat/car battery voltage and water level monitor.
 
 Based on the work of Chris2b (https://github.com/chrisb2/battery-monitor), translated from .ino to ESPhome. 
 
