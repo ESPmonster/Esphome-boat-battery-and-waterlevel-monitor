@@ -9,6 +9,8 @@ The usercase here is that I have a big open boat that could quickly fill up with
 
 When a critical value is reach, a React in Thingspeak triggers a (ThingHTTP) webhook that allows IFTT (if this then that) to notify me via the IFTT app and also sends an email.
 
+An ESP32 was used because it has superior wifi and allows 5V on the VIN pin.
+
 ## circuit
 The circuit is based on the one from Cris2b, with the addition of the ultrasonic
 
