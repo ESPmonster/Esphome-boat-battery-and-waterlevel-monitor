@@ -1,0 +1,97 @@
+
+esphome:
+  name: #replace with your name
+  platform: ESP32
+  board: mhetesp32devkit #replace with your board
+  on_boot:
+    priority: -10
+    # ...
+    then:
+      - switch.turn_off: led
+
+wifi:
+  networks:
+  - ssid: <<secret>> 
+    password: <<secret>> 
+  - ssid: <<secret>> 
+    password: <<secret>> 
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Boat Fallback Hotspot"
+    password: "HmDax615HmIH1I3"
+
+captive_portal:
+
+
+# Enable Home Assistant API 
+api:
+#  password: \\ remove when deployed outside the HA network 
+
+ota:
+  password: <<secret>>
+  
+deep_sleep: 
+  run_duration: 3min
+  sleep_duration: 90min
+  wakeup_pin_mode: IGNORE  # The ESP32 doesn't require setting a wake-up pin
+  
+mqtt:
+  broker: 'mqtt.thingspeak.com'
+  port: '1883'
+  client_id: 'esp3217856842'# use a unique id
+#  username: 'user465798' \\ necessary for subscribing but not publishing, can be random but unique string
+#  password: '<<secret>>' \\ necessary for subscribing but not publishing, your thingspeak MQTT API Key
+  discovery: 'false'
+  topic_prefix: 'channels'
+  discovery_retain: 'false'#essential
+  birth_message: # leave empty
+  will_message: # leave empty
+  log_topic:
+
+logger: 
+
+sensor:
+  - platform: ultrasonic
+    trigger_pin: GPIO16 
+    echo_pin: GPIO17
+    name: "Ultrasonic Sensor"
+    id: ultrasonic_sensor
+    state_topic: channels/1314715/publish/fields/field2/7YTE94NJU5ZZKJQR
+    discovery: False
+    retain: false # must be false for thingspeak for each topic
+    pulse_time: 25us
+    timeout: 3m
+    update_interval: 55s
+    unit_of_measurement: "cm"
+    accuracy_decimals: 0
+    filters:
+     - multiply: 100  # sensor reports depth in m, convert cm, disable when using the lambda function below 
+     - filter_out: nan
+#     - lambda: return h - (100 * x);  # replace h with max distance to the sensor in the boat if you want to measure waterheight instead
+
+  - platform: adc
+    pin: GPIO33 #GPIO 32-39
+    name: "Accu voltage"
+    id: voltage_meter
+    state_topic: channels/1314715/publish/fields/field1/7YTE94NJU5ZZKJQR
+    unit_of_measurement: "Volt"
+    discovery: False
+    retain: false # must be false for thingspeak for each topic
+    update_interval: 60s
+    attenuation: 2.5db # increases max full scale voltage to 1.5V, only on ESP32
+    filters:
+#     - lambda: return x / (22.0 / (220.0 + 22.0)); # The correction depends on the chosen resistors R1 and R2 for the voltage divider, in my case 220k and 22k ohm
+     - multiply: 11
+#    - calibrate_linear:  #if necessary add calibration
+#        - 1.2 -> 12
+#        - 0.78 -> 10
+    
+switch: #disable the blue on-board LED to save power
+  - platform: gpio
+    pin: GPIO2
+    name: Red_on-board_LED
+    inverted: true
+    id: led
+
+
