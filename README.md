@@ -7,9 +7,9 @@ I have used an ESP32 (MH et Live devkit) with ESPhome to monitor boat (or car) b
 
 The usercase here is that I have a big open boat that could quickly fill up with rainwater. A pump is connected to a 12V car battery with a solar panel. We don't yet know when we have enough solar energy to keep the boat dry. The ESP is powered from the battery and reports battery voltage. The device enters deep sleep to preserve power. An ultrasonic distance sensor (JSN-SR04T) is also attached to detect a rising water level inside the boat (i.e., pump failure).
 
-When a critical value is reach, a React in Thingspeak triggers a (ThingHTTP) webhook that allows IFTT (if this then that) to notify me via the IFTT app and also sends an email.
+When a critical value is reached, a React in Thingspeak triggers a (ThingHTTP) webhook that allows IFTT (if this then that) to notify me via the IFTT app and also sends an email.
 
-An ESP32 was used because it has superior wifi and allows 5V on the VIN pin.
+An ESP32 was used because it should have superior wifi and allows 5V on the VIN pin.
 
 ## circuit
 The circuit is based on the one from Cris2b, with the addition of the ultrasonic
