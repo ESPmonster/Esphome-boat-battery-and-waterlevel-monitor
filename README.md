@@ -18,6 +18,7 @@ Chris2B's circuit:
 
 ![project](battery-monitor%20circuit%20Chris2B.png?raw=true "Circuit")
 
+
 Let me know if anyone wants to see my circuit.
 
 ## ESPhome configuration
@@ -45,8 +46,10 @@ See the file
 
 ## completed project
 
-Will post some images
-
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_152855.jpg?v=4&s=400)
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_152841.jpg?v=4&s=400)
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_153557.jpg?v=4&s=400)
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_153755.jpg?v=4&s=400)
 ## References
 
 Based on the work of:
