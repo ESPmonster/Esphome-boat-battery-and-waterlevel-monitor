@@ -11,6 +11,8 @@ When a critical value is reached, a React in Thingspeak triggers a (ThingHTTP) w
 
 An ESP32 was used because it should have superior wifi and allows 5V on the VIN pin.
 
+Update: I replaced the analog to digital voltage sensor because its values varied strongly. Instead, I now use a INA226 voltage sensor: much better! Also, I added a binary water level sensor becayse the ultrasonic sensor has some trouble getting reliable measurements in the messy hull.
+
 ## circuit
 The circuit is based on the one from Cris2b, with the addition of the ultrasonic
 
