@@ -34,7 +34,7 @@ ota:
 deep_sleep: 
   run_duration: 3min
   sleep_duration: 90min
-  wakeup_pin_mode: IGNORE  # The ESP32 doesn't require setting a wake-up pin
+  wakeup_pin_mode: IGNORE # The ESP32 doesn't require setting a wake-up pin
   
 mqtt:
   broker: 'mqtt.thingspeak.com'
@@ -44,12 +44,18 @@ mqtt:
 #  password: '<<secret>>' \\ necessary for subscribing but not publishing, your thingspeak MQTT API Key
   discovery: 'false'
   topic_prefix: 'channels'
-  discovery_retain: 'false'#essential
+  discovery_retain: 'false'
   birth_message: # leave empty
   will_message: # leave empty
   log_topic:
 
 logger: 
+
+i2c:
+  sda: 21
+  scl: 22
+  scan: True
+
 
 sensor:
   - platform: ultrasonic
@@ -59,8 +65,8 @@ sensor:
     id: ultrasonic_sensor
     state_topic: channels/<<channelid>>/publish/fields/<<fieldnumber>>/<<writeAPIkey>> #replace with your thingspeak input
     discovery: False
-    retain: false # must be false for thingspeak for each topic
-    pulse_time: 25us
+    retain: false # must be on false for thingspeak for each topic
+    pulse_time: 16us
     timeout: 3m
     update_interval: 55s
     unit_of_measurement: "cm"
@@ -70,28 +76,30 @@ sensor:
      - filter_out: nan
 #     - lambda: return h - (100 * x);  # replace h with max distance to the sensor in the boat if you want to measure waterheight instead
 
-  - platform: adc
-    pin: GPIO33 #GPIO 32-39
-    name: "Accu voltage"
-    id: voltage_meter
+
+  - platform: ina226
+    address: 0x40
+    shunt_resistance: 0.002 ohm
+    bus_voltage:
+      name: "Accu INA226 Voltage"
     state_topic: channels/<<channelid>>/publish/fields/<<fieldnumber>>/<<writeAPIkey>> #replace with your thingspeak input
-    unit_of_measurement: "Volt"
-    discovery: False
-    retain: false # must be false for thingspeak for each topic
+      unit_of_measurement: "Volt"
+      discovery: False
+      retain: false # must be on false for thingspeak for each topic
+    max_current: 5A
     update_interval: 60s
-    attenuation: 2.5db # increases max full scale voltage to 1.5V, only on ESP32
-    filters:
-#     - lambda: return x / (22.0 / (220.0 + 22.0)); # The correction depends on the chosen resistors R1 and R2 for the voltage divider, in my case 220k and 22k ohm
-     - multiply: 11
-#    - calibrate_linear:  #if necessary add calibration
-#        - 1.2 -> 12
-#        - 0.78 -> 10
-    
-switch: #disable the blue on-board LED to save power
+
+#binary_sensor:
+  - platform: adc
+    pin: GPIO32 #connected to a 47K pull-down resistor
+    name: "Water level switch"
+    state_topic: channels/<<channelid>>/publish/fields/<<fieldnumber>>/<<writeAPIkey>> #replace with your thingspeak input
+    discovery: False
+    retain: false # must be on false for thingspeak for each topic
+
+switch: #allows disabling of the blue LED to save power
   - platform: gpio
     pin: GPIO2
     name: Red_on-board_LED
     inverted: true
     id: led
-
-
