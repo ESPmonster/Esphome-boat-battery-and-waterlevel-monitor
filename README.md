@@ -53,6 +53,9 @@ See the file
 
 ## completed project
 
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/20210430_101307.jpg?v=4&s=400)
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/20210430_101206.jpg?v=4&s=400)
+Previous version:
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_152855.jpg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_152841.jpg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/raw/main/20210306_153557.jpg?v=4&s=400)
