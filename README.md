@@ -16,10 +16,7 @@ Update 05-2021: I replaced the analog to digital voltage sensor because its valu
 ## circuit
 The circuit was based on the one from Cris2b but the voltage divider to directly measure voltage was later removed because of poor measurement precision. I also added the ultrasonic sensor, ina226, and float switch.
 
-Chris2B's circuit:
-
-![project](battery-monitor%20circuit%20Chris2B.png?raw=true "Circuit")
-
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Wiring%20diagram.png?v=4&s=400)
 
 Let me know if you want to see my exact circuit.
 
