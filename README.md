@@ -42,6 +42,7 @@ See the file
 * IP66 waterproof case (sonoff)
 * screw terminal block 2x
 * 40 Pins header Female (to easily remove the ESP from the board)
+* jsn-sr04t ultrasonic distance sensor
 05-2021 added:
 * INA226 voltage sensor
 * water float switch (https://www.amazon.com/NUZAMAS-Automatic-Caravan-Camping-Fishing/dp/B073XDXM9P)
