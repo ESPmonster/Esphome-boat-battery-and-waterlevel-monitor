@@ -11,7 +11,7 @@ When a critical value is reached, a React in Thingspeak triggers a (ThingHTTP) w
 
 An ESP32 was used because it should have superior wifi and allows 5V on the VIN pin.
 
-Update 05-2021: I replaced the analog to digital voltage sensor because its values varied strongly. Instead, I now use a INA226 voltage sensor: much better! Also, I added a binary water level sensor because the ultrasonic sensor had some trouble getting reliable measurements in the messy hull. The latter has now also been fixed by placing the ultrasonic sensor in large (110 mm diameter) sewage pipe with the sensor placed in a (conus-shaped) funnel to direct the sound in the right direction (see photographs).
+Update 05-2021: I replaced the analog to digital voltage sensor because its values varied strongly. Instead, I now use a INA226 voltage sensor: much better! Also, I added a float switch because the ultrasonic sensor had some trouble getting reliable measurements in the messy hull. Because the float switch suffered from floating in the off state, I added a 47k pull-down resistor. The ultrasonic sensor has now also been fixed by placing the ultrasonic sensor in large (110 mm diameter) sewage pipe with the sensor placed in a (conus-shaped) funnel to direct the sound in the right direction (see photographs).
 
 ## circuit
 The circuit was based on the one from Cris2b but the voltage divider to directly measure voltage was later removed because of poor measurement precision. I also added the ultrasonic sensor, ina226, and float switch.
@@ -35,14 +35,12 @@ See the file
 * 1000uF 35V Electrolytic Capacitor
 * 0.1uF 50V Ceramic Capacitor
 * 150uH RF Choke, 4.2&Omega;, 175mA max
-* 1K&Omega; Resistor
-* 220K&Omega; Resistor
-* 22K&Omega; Resistor
+* 47K&Omega; Resistor
 * In-line fuse holder and 250mA fuse
 * 2 core cable (2 Meters)
-* Solder tags (6mm ID) x 2
+* Solder tags (6mm ID) x 2 (if you want to connect directly to a 12V battery)
 * IP66 waterproof case (sonoff)
-* screw terminal block
+* screw terminal block 2x
 * 40 Pins header Female (to easily remove the ESP from the board)
 05-2021 added:
 * INA226 voltage sensor
