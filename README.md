@@ -14,7 +14,7 @@ An ESP32 was used because it should have superior wifi and allows 5V on the VIN 
 Update 05-2021: I replaced the analog to digital voltage sensor because its values varied strongly. Instead, I now use a INA226 voltage sensor: much better! Also, I added a float switch because the ultrasonic sensor had some trouble getting reliable measurements in the messy hull. Because the float switch suffered from floating in the off state, I added a 47k pull-down resistor. The ultrasonic sensor has now also been fixed by placing the ultrasonic sensor in large (110 mm diameter) sewage pipe with the sensor placed in a (conus-shaped) funnel to direct the sound in the right direction (see photographs).
 
 ## circuit
-The circuit was based on the one from Cris2b but the voltage divider to directly measure voltage was later removed because of poor measurement precision. I also added the ultrasonic sensor, ina226 voltage sensor, and float switch.
+The circuit was based on the one from Cris2b but the voltage divider to directly measure voltage was later removed because of poor measurement precision. It brings down the 12V from the battery to 5V and protects the circuit to any voltage spikes and shorts. I also added the ultrasonic sensor, ina226 voltage sensor, and float switch.
 
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Wiring%20diagram.png?v=4&s=400)
 
@@ -37,7 +37,7 @@ See the file
 * Solder tags (6mm ID) x 2 (if you want to connect directly to a 12V battery)
 * IP66 waterproof case (sonoff)
 * screw terminal block 2x
-* 40 Pins header Female (to easily remove the ESP from the board)
+* 40 female pin headers  (to easily remove the ESP from the board)
 * jsn-sr04t ultrasonic distance sensor
 05-2021 added:
 * INA226 voltage sensor
