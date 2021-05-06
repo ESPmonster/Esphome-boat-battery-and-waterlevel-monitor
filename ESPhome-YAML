@@ -32,8 +32,9 @@ ota:
   password: <<secret>>
   
 deep_sleep: 
-  run_duration: 3min
-  sleep_duration: 90min
+  run_duration: 6min
+  sleep_duration: 84min
+  wakeup_pin: GPIO32
   wakeup_pin_mode: IGNORE # The ESP32 doesn't require setting a wake-up pin
   
 mqtt:
@@ -74,6 +75,9 @@ sensor:
     filters:
      - multiply: 100  # sensor reports depth in m, convert cm, disable when using the lambda function below 
      - filter_out: nan
+     - sliding_window_moving_average:
+        window_size: 3
+        send_every: 3
 #     - lambda: return h - (100 * x);  # replace h with max distance to the sensor in the boat if you want to measure waterheight instead
 
 
@@ -96,6 +100,23 @@ sensor:
     state_topic: channels/<<channelid>>/publish/fields/<<fieldnumber>>/<<writeAPIkey>> #replace with your thingspeak input
     discovery: False
     retain: false # must be on false for thingspeak for each topic
+    
+http_request:
+  useragent: esphome/bitty
+  timeout: 10s
+
+time:
+  - platform: sntp
+    # ...
+    on_time:
+      # Every minute
+      - seconds: 0
+        minutes: /1
+        then:
+          - http_request.get: 
+              url: https://hc-ping.com/[...]
+              verify_ssl: false
+          
 
 switch: #allows disabling of the blue LED to save power
   - platform: gpio
