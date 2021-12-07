@@ -1,0 +1,186 @@
+
+esphome:
+  name: bootaccu-meter
+  platform: ESP32
+  board: mhetesp32devkit
+  on_boot:
+    priority: -10
+    # ...
+    then:
+      - switch.turn_off: led
+
+wifi:
+  networks:
+  - ssid: !secret ssid
+    password: !secret wifi_password
+
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Hotspot"
+    password: "dvdvdv"
+
+captive_portal:
+
+
+# Enable Home Assistant API \\ remove when deployed outside the HA network 
+#api:
+#  password: !secret AP_password
+
+ota:
+  password: !secret OTA_password
+  
+deep_sleep: 
+  run_duration: 6min
+  sleep_duration: 84min
+  wakeup_pin: GPIO32
+  wakeup_pin_mode: IGNORE
+  id: deep_sleep_1
+  
+mqtt:
+  broker: 'mqtt3.thingspeak.com'# alt: mqtt.thingspeak.com
+  port: '1883'
+  client_id: '<<INSERT CLIENT ID'#
+  username: '<<INSERT USERNAME = CLIENT ID>>' # 
+  password: '<<INSERT MQTT PASSWORD FROM THINGSPEAK>>'
+  discovery: 'false'
+  discovery_retain: 'false'
+  birth_message: # leave empty
+  will_message: # leave empty
+  log_topic: #leave empty
+  topic_prefix: 'channels'
+  on_message:
+    - topic: 'channels/<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>' # make subcribe field
+      qos: 0
+      payload: '1'
+      then:
+      - switch.turn_on: pump_relay
+    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>' # make subcribe field
+      qos: 0
+      payload: '0'
+      then:
+      - switch.turn_off: pump_relay     
+    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+      payload: '1' #1.0?
+      then:
+        - deep_sleep.prevent: deep_sleep_1
+    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+      payload: '1' #1.0?
+      then:
+        - deep_sleep.enter: deep_sleep_1      
+    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+      payload: '1'
+      then:
+        - switch.turn_on: restart_1
+        
+logger: 
+#  level: VERBOSE
+
+i2c:
+  sda: 21
+  scl: 22
+  scan: True
+
+
+sensor:
+  - platform: ultrasonic
+    trigger_pin: GPIO16 
+    echo_pin: GPIO17
+    name: "Ultrasonic Sensor"
+    id: ultrasonic_sensor
+    state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+    discovery: False
+    retain: false # must be on false for thingspeak for each topic
+    pulse_time: 16us
+    timeout: 3m
+    update_interval: 55s
+    unit_of_measurement: "cm"
+    accuracy_decimals: 0
+    filters:
+     - filter_out: nan
+     - lambda: |-
+         if (x > 0.240) return x; 
+         else return {};
+     - multiply: 100  # sensor reports depth in m, convert cm, disable when using the lambda function below 
+
+#     - sliding_window_moving_average:
+#         window_size: 3
+#         send_every: 3
+#     - lambda: return h - (100 * x);  # replace h with max distance to the sensor in the boat if you want to measure waterheight instead
+
+
+  - platform: ina226
+    address: 0x40
+    shunt_resistance: 0.002 ohm
+#    current:
+#      name: " Pomp INA226 Current"
+#      state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+#      unit_of_measurement: "A"
+#      discovery: False
+#      retain: false # must be on false for thingspeak for each topic
+ #   power:
+#      name: "Accu INA226 Power"
+    bus_voltage:
+      name: "Accu INA226 Voltage"
+      state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+      unit_of_measurement: "Volt"
+      discovery: False
+      retain: false # must be on false for thingspeak for each topic
+#    shunt_voltage:
+#      name: "INA226 Shunt Voltage"
+     # filters:
+      #  - median:
+       #     window_size: 3
+         #   send_every: 3
+         #   send_first_at: 3
+    max_current: 5A
+    update_interval: 60s
+
+
+#binary_sensor:
+  - platform: adc
+    pin: GPIO32 #connected to a 47K pull-down resistor
+    name: "Water level switch"
+    state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+    discovery: False
+    retain: false # must be on false for thingspeak for each topic
+
+switch: #allows disabling of the blue LED to save power
+  - platform: gpio
+    pin: GPIO2
+    name: Red_on-board_LED
+    inverted: true
+    id: led
+  - platform: gpio #for controlling the pump
+    name: test relay
+    id: pump_relay
+    pin: GPIO17
+    restore_mode: ALWAYS_OFF #this means the pump will shut down when entering and exiting deep sleep
+    retain: true
+    discovery: true
+    state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+    command_topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+    
+    
+  - platform: restart
+    id: restart_1
+    
+http_request:
+  useragent: esphome/bitty
+  timeout: 10s
+
+time:
+  - platform: sntp
+    # ...
+    on_time:
+      # Every minute
+      - seconds: 0
+        minutes: /1
+        then:
+          - http_request.get: 
+              url: https://hc-ping.com/secret-secret
+              verify_ssl: false
+          
+
+
+
