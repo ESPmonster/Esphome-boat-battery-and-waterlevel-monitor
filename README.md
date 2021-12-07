@@ -16,6 +16,7 @@ The circuit was based on the one from Cris2b but the voltage divider to directly
 
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Wiring%20diagram.png?v=4&s=400)
 
+Edit: the wiring diagram has been modified so that the float switch can also directly activate the pump and the pump can be activated via mqtt through a relay. Let me know if you need a new wiring diagram.
 
 ## ESPhome configuration
 
@@ -47,10 +48,11 @@ See the file
 
 ## completed project
 
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Thingview_app.jpeg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/20210430_101307.jpg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/20210430_101206.jpg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/IMG-20210502-WA0011.jpeg?v=4&s=400)
-![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Thingview app.jpeg?v=4&s=400)
+
 
 ## References
 
