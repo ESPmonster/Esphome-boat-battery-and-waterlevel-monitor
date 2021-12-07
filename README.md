@@ -48,7 +48,7 @@ See the file
 
 ## completed project
 
-![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Thingview%20app.jpeg?v=4&s=400)
+![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/Thingview%20app.jpg?v=2&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/20210430_101307.jpg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/20210430_101206.jpg?v=4&s=400)
 ![](https://github.com/ESPmonster/Esphome-boat-battery-and-waterlevel-monitor/blob/main/IMG-20210502-WA0011.jpeg?v=4&s=400)
