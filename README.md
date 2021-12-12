@@ -9,8 +9,10 @@ The usercase here is that we have a big open boat that could quickly flood with 
 
 When a critical value is reached, a React within Thingspeak triggers a (ThingHTTP) webhook that allows IFTT (if this then that www.IFTT.com) to notify us via Telegram. Also the ESP makes HTTP_get requests to healthchecks.io to confirm that it's 'alive' (heartbeat monitor); if it fails >4h I'm notified as well. We build a dashboard on thingspeak that can easily  be viewed on your mobile phone via the Thingview app (https://play.google.com/store/apps/details?id=com.cinetica_tech.thingview&hl=en&gl=US).
 
-The ESP is now also subscribed to a couple of thingspeak fields. Using MQTTX or HTTP requests (https://api.thingspeak.com/update?api_key=<<insert API-key>>&field<<insert field number>>=<<insert command value>>) to publish command values to these fields we can 1) manually activate the pump 2) prevent deep sleep 3) start deep sleep and 4) reboot, all via MQTT. It is important to realize that any MQTT publications to incorrect topics will result in a disconnect from the Thingspeak server.
+The ESP is now also subscribed to a couple of thingspeak fields. Using MQTTX or HTTP requests to publish command values to these fields we can 1) manually activate the pump 2) prevent deep sleep 3) start deep sleep and 4) reboot, all via MQTT. It is important to realize that any MQTT publications to incorrect topics will result in a disconnect from the Thingspeak server.
 
+The HTTP GET method of updating field values is: https://api.thingspeak.com/update?api_key=<<insert API-key>>&field<<insert field number>>=<<insert command value>> 
+Sometimes, repeated requests are necessary to bypass the server limit. Keep trying until you receive a non-zero response.
 
 ## circuit
 The circuit was based on the one from Cris2b but the voltage divider to directly measure voltage was later removed because of poor measurement precision. It brings down the 12V from the battery to 5V and protects the circuit to any voltage spikes and shorts. I also added the ultrasonic sensor, ina226 voltage sensor, and float switch.
