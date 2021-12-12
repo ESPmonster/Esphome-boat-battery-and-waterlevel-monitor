@@ -61,16 +61,19 @@ mqtt:
       then:
       - switch.turn_off: pump_relay     
     - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
-      payload: '1' #1.0?
+      payload: '1' 
       then:
         - deep_sleep.prevent: deep_sleep_1
+        - logger.log: "Deep sleep prevented, reboot or sleep to reset"
     - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
-      payload: '1' #1.0?
+      payload: '1' 
       then:
         - deep_sleep.enter: deep_sleep_1      
     - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
       payload: '1'
       then:
+        - logger.log: "Reboot order via MQTT"
+        - delay: 4s
         - switch.turn_on: restart_1
         
 logger: 
