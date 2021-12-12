@@ -163,8 +163,8 @@ switch: #allows disabling of the blue LED to save power
     
     
   - platform: restart
-    id: restart_1
-    
+    id: restart_1 
+    # name: "restart switch" --> it is crucial to not name this switch, otherwise thingspeak will receive an unrecognized mqtt message and will disconnect.
 http_request:
   useragent: esphome/bitty
   timeout: 10s
