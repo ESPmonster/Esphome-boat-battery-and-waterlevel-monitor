@@ -55,21 +55,21 @@ mqtt:
       payload: '1'
       then:
       - switch.turn_on: pump_relay
-    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>' # make subcribe field
+    - topic: 'channels/<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>' # make subcribe field
       qos: 0
       payload: '0'
       then:
       - switch.turn_off: pump_relay     
-    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+    - topic: 'channels/<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
       payload: '1' 
       then:
         - deep_sleep.prevent: deep_sleep_1
         - logger.log: "Deep sleep prevented, reboot or sleep to reset"
-    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+    - topic: 'channels/<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
       payload: '1' 
       then:
         - deep_sleep.enter: deep_sleep_1      
-    - topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+    - topic: 'channels/<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
       payload: '1'
       then:
         - logger.log: "Reboot order via MQTT"
@@ -91,7 +91,7 @@ sensor:
     echo_pin: GPIO17
     name: "Ultrasonic Sensor"
     id: ultrasonic_sensor
-    state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+    state_topic: 'channels/<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
     discovery: False
     retain: false # must be on false for thingspeak for each topic
     pulse_time: 16us
@@ -117,7 +117,7 @@ sensor:
     shunt_resistance: 0.002 ohm
 #    current:
 #      name: " Pomp INA226 Current"
-#      state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+#      state_topic: 'channels/<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
 #      unit_of_measurement: "A"
 #      discovery: False
 #      retain: false # must be on false for thingspeak for each topic
@@ -125,7 +125,7 @@ sensor:
 #      name: "Accu INA226 Power"
     bus_voltage:
       name: "Accu INA226 Voltage"
-      state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+      state_topic: 'channels/<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
       unit_of_measurement: "Volt"
       discovery: False
       retain: false # must be on false for thingspeak for each topic
@@ -144,7 +144,7 @@ sensor:
   - platform: adc
     pin: GPIO32 #connected to a 47K pull-down resistor
     name: "Water level switch"
-    state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+    state_topic: 'channels/<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
     discovery: False
     retain: false # must be on false for thingspeak for each topic
 
@@ -161,8 +161,8 @@ switch: #allows disabling of the blue LED to save power
     restore_mode: ALWAYS_OFF #this means the pump will shut down when entering and exiting deep sleep
     retain: true
     discovery: true
-    state_topic: '<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
-    command_topic: '<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
+    state_topic: 'channels/<<INSERT CHANNEL #>>/publish/fields/field<INSERT FIELD #>>'
+    command_topic: 'channels/<<INSERT CHANNEL #>>/subscribe/fields/field<INSERT FIELD #>>'
     
     
   - platform: restart
